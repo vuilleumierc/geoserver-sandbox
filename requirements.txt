@@ -1,0 +1,4 @@
+geoservercloud==0.7.1
+GeoAlchemy2==0.18.1
+psycopg2-binary==2.9.9
+sqlalchemy==2.0.44

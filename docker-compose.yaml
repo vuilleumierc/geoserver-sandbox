@@ -1,0 +1,33 @@
+volumes:
+  data_directory:
+    driver_opts:
+      type: none
+      o: bind
+      device: $PWD/datadir
+
+services:
+  geoserver:
+    image: docker.osgeo.org/geoserver:2.28.1
+    ports:
+      - "8080:8080"
+    volumes:
+      - data_directory:/opt/geoserver_data/
+    env_file:
+      - geoserver.env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/geoserver/web/wicket/resource/org.geoserver.web.GeoServerBasePage/img/logo.png"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  db:
+    image: postgis/postgis:16-3.5-alpine
+    environment:
+      POSTGRES_DB: geoserver
+      POSTGRES_USER: geoserver
+      POSTGRES_PASSWORD: geoserver
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db-entrypoint:/docker-entrypoint-initdb.d/
+    command: ["postgres", "-c", "log_statement=all", "-c", "log_min_messages=debug1"]

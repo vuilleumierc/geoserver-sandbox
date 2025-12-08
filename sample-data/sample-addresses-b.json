@@ -1,0 +1,24 @@
+{
+    "addresses": [
+        {
+            "id": 1,
+            "street_name": "Martkgasse",
+            "street_number": "1",
+            "postal_code": 3000,
+            "town_name": "Bern",
+            "canton": "BE",
+            "label": "Martkgasse 1, 3000 Bern",
+            "geometry": "SRID=2056;POINT(2600010 1200010)"
+        },
+        {
+            "id": 2,
+            "street_name": "Spitalgasse",
+            "street_number": "10",
+            "postal_code": 3011,
+            "town_name": "Bern",
+            "canton": "BE",
+            "label": "Spitalgasse 10, 3011 Bern",
+            "geometry": "SRID=2056;POINT(2600000 1199900)"
+        }
+    ]
+}
