@@ -11,33 +11,39 @@ engine = create_engine(
     "postgresql+psycopg2://geoserver:geoserver@localhost:5432/geoserver"
 )
 
-# Create address table in schema_a and schema_b
-AddressA = get_address_model("schema_a")
-AddressB = get_address_model("schema_b")
-Base.metadata.create_all(engine)
-
-# Load sample data for schema_a.t_address
-with open("sample-data/sample-addresses-a.json") as f:
-    sample_addresses_a = json.load(f)["addresses"]
-
-# Load sample data for schema_b.t_address
-with open("sample-data/sample-addresses-b.json") as f:
-    sample_addresses_b = json.load(f)["addresses"]
-
-with Session(engine) as session:
-    for addr in sample_addresses_a:
-        address = AddressA(**addr)
-        session.merge(address)  # Upsert: insert if new, update if exists
-    for addr in sample_addresses_b:
-        address = AddressB(**addr)
-        session.merge(address)
-    session.commit()
-
 gs = GeoServerCloud(
     url="http://localhost:8080/geoserver",
     user="admin",
     password="geoserver",
 )
+
+
+def create_table_and_insert_data(conn, schema_name):
+    """
+    Create table and insert data within a given connection/transaction.
+
+    Args:
+        conn: SQLAlchemy connection (from engine.begin())
+        schema_name: Schema name to create the table in
+    """
+    # Create table in the specified schema
+    Address = get_address_model(schema_name)
+    Base.metadata.create_all(conn)
+
+    # Insert data using a session bound to this connection
+    with Session(bind=conn) as session:
+        with open(f"sample-data/sample-addresses-{schema_name}.json") as f:
+            sample_addresses = json.load(f)["addresses"]
+
+        for addr in sample_addresses:
+            address = Address(**addr)
+            session.merge(address)  # Upsert: insert if new, update if exists
+        session.flush()  # Flush to ensure data is written in this transaction
+
+
+# Create address table in schema_a
+with engine.begin() as conn:
+    create_table_and_insert_data(conn, "schema_a")
 
 content, status = gs.create_workspace("test")
 print(f"Workspace created: {status}")
@@ -91,11 +97,20 @@ print(f"GetTile response status: {response._response.status_code}")
 with open("generated/t_address_tile_0.png", "wb") as f:
     f.write(response._response.content)
 
-# Rotate the DB schemas
+# Rotate the DB schemas - all in one transaction
 with engine.begin() as conn:
+    conn.execute(text("CREATE SCHEMA IF NOT EXISTS schema_b;"))
+
+    # Create table and insert data in schema_b
+    create_table_and_insert_data(conn, "schema_b")
+
+    # Rotate schemas
     conn.execute(text("DROP SCHEMA IF EXISTS schema_a CASCADE;"))
     conn.execute(text("ALTER SCHEMA schema_b RENAME TO schema_a;"))
-    conn.execute(text("CREATE SCHEMA IF NOT EXISTS schema_b;"))
+    conn.execute(text("GRANT USAGE ON SCHEMA schema_a TO geoserver_appuser;"))
+    conn.execute(
+        text("GRANT SELECT ON ALL TABLES IN SCHEMA schema_a TO geoserver_appuser;")
+    )
 
 response = gs.get_tile(
     layer="test:t_address",
