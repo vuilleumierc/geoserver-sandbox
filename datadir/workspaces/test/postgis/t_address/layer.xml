@@ -1,0 +1,17 @@
+<layer>
+  <name>t_address</name>
+  <id>LayerInfo-01KCPCMCGWX18MHQYJ37QN1XK7</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfo-01KCPCMCP2DJ6C743WJ2ZC7MKV</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfo-01KCPCMCF9NDEK80F56410SNH4</id>
+  </resource>
+  <queryable>true</queryable>
+  <opaque>false</opaque>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+</layer>

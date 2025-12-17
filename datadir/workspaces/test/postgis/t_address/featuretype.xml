@@ -1,0 +1,41 @@
+<featureType>
+  <id>FeatureTypeInfo-01KCPCMCF9NDEK80F56410SNH4</id>
+  <name>t_address</name>
+  <nativeName>t_address</nativeName>
+  <namespace>
+    <id>NamespaceInfo-01KCPCMBRBJ4MYGBSAC63D5FT1</id>
+  </namespace>
+  <title>Default title</title>
+  <abstract>Default abstract</abstract>
+  <srs>EPSG:4326</srs>
+  <nativeBoundingBox>
+    <minx>-180.0</minx>
+    <maxx>180.0</maxx>
+    <miny>-90.0</miny>
+    <maxy>90.0</maxy>
+    <crs>EPSG:4326</crs>
+  </nativeBoundingBox>
+  <latLonBoundingBox>
+    <minx>-180.0</minx>
+    <maxx>180.0</maxx>
+    <miny>-90.0</miny>
+    <maxy>90.0</maxy>
+    <crs>EPSG:4326</crs>
+  </latLonBoundingBox>
+  <projectionPolicy>FORCE_DECLARED</projectionPolicy>
+  <enabled>true</enabled>
+  <advertised>true</advertised>
+  <store class="dataStore">
+    <id>DataStoreInfo-01KCPCMC1CK6FF92PXTAYWEHCS</id>
+  </store>
+  <serviceConfiguration>false</serviceConfiguration>
+  <simpleConversionEnabled>false</simpleConversionEnabled>
+  <maxFeatures>0</maxFeatures>
+  <numDecimals>0</numDecimals>
+  <padWithZeros>false</padWithZeros>
+  <forcedDecimal>false</forcedDecimal>
+  <overridingServiceSRS>false</overridingServiceSRS>
+  <skipNumberMatched>false</skipNumberMatched>
+  <circularArcPresent>false</circularArcPresent>
+  <encodeMeasures>false</encodeMeasures>
+</featureType>

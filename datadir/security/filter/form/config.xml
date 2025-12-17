@@ -1,0 +1,7 @@
+<usernamePasswordFilter>
+  <id>26b13af1:19b2cc95079:-7ffa</id>
+  <name>form</name>
+  <className>org.geoserver.security.filter.GeoServerUserNamePasswordAuthenticationFilter</className>
+  <passwordParameterName>password</passwordParameterName>
+  <usernameParameterName>username</usernameParameterName>
+</usernamePasswordFilter>

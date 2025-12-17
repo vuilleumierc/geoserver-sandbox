@@ -1,0 +1,18 @@
+<dataStore>
+  <id>DataStoreInfo-01KCPCMC1CK6FF92PXTAYWEHCS</id>
+  <name>postgis</name>
+  <type>PostGIS (JNDI)</type>
+  <enabled>true</enabled>
+  <workspace>
+    <id>WorkspaceInfo-01KCPCMBNMPBE00A5QGSXCYDYM</id>
+  </workspace>
+  <connectionParameters>
+    <entry key="schema">schema_a</entry>
+    <entry key="jndiReferenceName">java:comp/env/jdbc/postgis</entry>
+    <entry key="Expose primary keys">true</entry>
+    <entry key="dbtype">postgis</entry>
+    <entry key="namespace">http://test</entry>
+  </connectionParameters>
+  <__default>false</__default>
+  <disableOnConnFailure>false</disableOnConnFailure>
+</dataStore>
