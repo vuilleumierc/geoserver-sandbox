@@ -8,7 +8,7 @@
             "town_name": "Bern",
             "canton": "BE",
             "label": "Martkgasse 1, 3000 Bern",
-            "geometry": "SRID=2056;POINT(2600010 1200010)"
+            "geometry": "SRID=4326;POINT(7.438764 46.951173)"
         },
         {
             "id": 2,
@@ -18,7 +18,7 @@
             "town_name": "Bern",
             "canton": "BE",
             "label": "Spitalgasse 10, 3011 Bern",
-            "geometry": "SRID=2056;POINT(2600000 1199900)"
+            "geometry": "SRID=4326;POINT(7.438632 46.950183)"
         }
     ]
 }

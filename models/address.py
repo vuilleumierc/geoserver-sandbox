@@ -7,7 +7,7 @@
 #  town_name     | character varying     |           |          |
 #  canton        | character varying     |           |          |
 #  label         | character varying     |           |          |
-#  geometry      | geometry(Point,2056)  |           |          |
+#  geometry      | geometry(Point,4326)  |           |          |
 
 from sqlalchemy import Column, BigInteger, String
 from sqlalchemy.orm import DeclarativeBase
@@ -40,6 +40,6 @@ def get_address_model(schema_name: str = "public"):
         town_name = Column(String)
         canton = Column(String)
         label = Column(String)
-        geometry = Column(Geometry(geometry_type="POINT", srid=2056))
+        geometry = Column(Geometry(geometry_type="POINT", srid=4326))
 
     return Address

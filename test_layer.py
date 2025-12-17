@@ -8,11 +8,11 @@ from models.address import Base, get_address_model
 
 
 engine = create_engine(
-    "postgresql+psycopg2://geoserver:geoserver@localhost:5432/geoserver"
+    "postgresql+psycopg2://geoserver:geoserver@localhost:5432/postgis"
 )
 
 gs = GeoServerCloud(
-    url="http://localhost:8080/geoserver",
+    url="http://localhost:9090/geoserver/cloud",
     user="admin",
     password="geoserver",
 )
@@ -60,7 +60,7 @@ content, status = gs.create_feature_type(
     layer_name="t_address",
     workspace_name="test",
     datastore_name="postgis",
-    epsg=2056,
+    epsg=4326,
 )
 print(f"Feature type created: {status}")
 
@@ -78,10 +78,13 @@ content, status = gs.set_default_layer_style(
 )
 print(f"Default style set: {status}")
 
+content, status = gs.create_gridset(4326)
+print(f"Gridset created: {status}")
+
 content, status = gs.publish_gwc_layer(
     layer="t_address",
     workspace_name="test",
-    epsg=2056,
+    epsg=4326,
 )
 print(f"GWC layer published: {status}")
 
@@ -125,8 +128,11 @@ with open("generated/t_address_tile_1.png", "wb") as f:
     f.write(response._response.content)
 
 # Restart GeoServer
-subprocess.run(["docker", "compose", "down", "geoserver"], check=True)
-subprocess.run(["docker", "compose", "up", "-d", "--wait", "geoserver"], check=True)
+subprocess.run(["docker", "compose", "down"], check=True)
+subprocess.run(["docker", "compose", "up", "-d"], check=True)
+from time import sleep
+
+sleep(120)
 
 response = gs.get_tile(
     layer="test:t_address",
